@@ -1,0 +1,153 @@
+﻿1. Запускаем приложение
+    Были вызваны методы MainActivity:
+    	onCreate()
+		onStart()
+    	onPostCreate()
+    	onResume()
+    	onPostResume()
+		
+2. Открываем SecondActivity
+	MainActivity вызывает метод:
+		onPause()
+	SecondActivity вызывает методы: 
+		onCreate()
+		onStart()
+    	onPostCreate()
+    	onResume()
+    	onPostResume()
+	MainActivity вызывает методы:
+		onSaveInstanceState()
+		onStop()
+		
+2.1	Закрываем SecondActivity
+	SecondActivity вызывает метод:
+		onPause()
+	MainActivity вызывает методы:
+		onRestart()
+		onStart()
+		onResume()
+		onPostResume()
+	SecondActivity вызывает методы:
+		onStop()
+		onDestroy()
+
+	
+3. Открываем dialog
+	SomeDialog вызывает методы:
+		onCreateDialog()
+		onStart()
+		onResume() 
+		
+3.1 Закрываем dialog
+	SomeDialog вызывает методы:
+		onPause()
+		onStop() 
+		onDestroy()
+
+4. Нажимаем exit
+	MainActivity вызывает методы:
+		onPause()
+		onStop()
+		onDestroy()
+
+5. Запускаем приложение
+5.1 Открываем - закрываем SecondActivity
+5.2 Открываем - закрываем dialog
+5.3 Изменим текст в в обоих EditText
+5.4 Значения полей "Activity count", "Dialog count", "Activity count from map", "Dialog count from map" увеличились на единицу.
+5.5 Совершаем поворот экрана
+	MainActivity вызывает методы:
+		 onPause()
+		 onSaveInstanceState()
+		 onStop()
+		 onRetainCustomNonConfigurationInstance()
+		 onDestroy()
+		 onCreate()
+		 onStart()
+		 onRestoreInstanceState()
+		 onPostCreate()
+		 onResume()
+		 onPostResume()
+	Значения поле сохранились за исключением "Dialog count". Это связано с тем что метод onSaveInstanceState,
+	сохраняющий состояние активити, позаботился о сохранении только поля "Activity count", 
+	значение которого восстановил в методе onRestoreInstanceState. Это говорит нам о том, 
+	что при повороте экрана активити уничтожается и создается заново, и мы должны позаботится о сохранности данных.
+	Значения полей "Activity count from map", "Dialog count from map" хранятся в Map<String, String> и для того чтобы сохранить состояние 
+	объекта, мы должны использовать метод onRetainCustomNonConfigurationInstance(), где просто возвращаем ссылку на него. 
+	Ну а метод getLastCustomNonConfigurationInstance() поможет нам поймать то что мы вернули. 
+	Теперь что касается EditText. Значение одного сохранилось, а другого вернулось к первоначальному. Это связано с тем что 
+	EditText состояние которого сохранилось имеет id, а второй нет.
+
+5.6 Открываем - закрываем SecondActivity
+5.7 Открываем - закрываем dialog
+5.8 Значения полей "Activity count", "Dialog count", "Activity count from map", "Dialog count from map" увеличились на единицу.
+	Поле "Dialog count" начало отсчет заново.
+
+5.9 Совершаем обратный поворот экрана
+	MainActivity вызывает методы:
+		 onPause()
+		 onSaveInstanceState()
+		 onStop()
+		 onDestroy()
+		 onCreate()
+		 onStart()
+		 onRestoreInstanceState()
+		 onPostCreate()
+		 onResume()
+		 onPostResume()
+	Как и ожидалось значения поле сохранились за исключением "Dialog count".
+	
+6. Открываем SecondActivity и нажимаем на телефоне назад. Наблюдаем порядок вызова методов такой же как и в п.2 и 2.1 
+	
+
+7. Открываем dialog и нажимаем на телефоне назад. Наблюдаем порядок вызова методов такой же как и в п.3 и 3.1 
+
+8. Находясь на MainActivity нажимаем на телефоне назад.
+	MainActivity вызывает методы:
+		onPause()
+		onStop()
+		onDestroy()
+	Те же методы что и при нажатии на кнопку "Exit". Как видим метод onSaveInstanceState() не вызывается, 
+	а значит, для сохранения пользовательских данных в данном случае он нам не подходит. Лучше всего это делать в методе onPause().
+		
+9. Запускаем приложение заново. Значение полей "Activity count from map", "Dialog count from map" 
+	остались такими же как и в момент завершения работы программы. Это обеспечивается за счет того что в методе onPause() 
+	мы производим сохранение данных использую SharedPreferences, но вполне можно использовать и другие средства, например sqLite. 
+	Восстанавливается значение этих полей в методе onCreate()
+
+
+10. Сворачиваем приложение.
+	MainActivity вызывает методы:
+		onPause()
+		onSaveInstanceState()
+		onStop()
+
+11. Разворачиваем приложение
+    MainActivity вызывает методы:
+		onRestart()
+		onStart()
+		onResume()
+		onPostResume()
+		
+12. Сворачиваем приложение и свайпнем его.
+	MainActivity вызывает методы:
+		onPause()
+		onSaveInstanceState()
+		onStop()
+	Метод onDestroy() не был вызван.
+
+Выводы:
+	1. Метод onDestroy() может и не вызываться.
+	2. При работе с диалогами ни один из методов жизненного цикла родительского активити не вызывается, 
+	за исключением того случая когда с открытым диалогом пользователь сворачивает приложение
+	3. Метод onSaveInstanceState() тоже не всегда вызывается. Например когда открываем SecondActivity 
+	onSaveInstanceState() вызывается перед методом onStop(), а при нажатии на кнопку Exit - нет.
+	4. Интересно что метод onPostCreate() вызывается не сразу после метода onCreate(), а после  onStart() и onRestoreInstanceState()
+	5. При повороте экрана активити уничтожается и создается заново, и мы должны позаботится о сохранности данных.
+	6. Сохранение всех важных данных следует делать в методе onPause().
+	7. При повороте экрана объекты передаем используя метод  onRetainCustomNonConfigurationInstance(). 
+	Ловим их методом getLastCustomNonConfigurationInstance()
+
+Вопросы:
+	Такие методы как onPostCreate() и onPostResume() тоже относятся к жизненному циклу активити? 
+Они вроде как вызываются, но в документации и рисунках о них не указывают.

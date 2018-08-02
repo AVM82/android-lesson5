@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/openActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:text="@string/show_second_activity" />
+
+    <Button
+        android:id="@+id/openDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:text="@string/show_dialog" />
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:text="@string/exit" />
+
+
+    <TextView
+        android:id="@+id/activityCountFromMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:text="@string/activity_from_map" />
+
+    <TextView
+        android:id="@+id/dialogCountFromMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:text="@string/dialog_from_map" />
+
+    <TextView
+        android:id="@+id/activityCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:text="@string/activity" />
+
+    <TextView
+        android:id="@+id/dialogCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:text="@string/dialog" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/noId" />
+
+    <EditText
+        android:id="@+id/haveId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/editHaveId" />
+</LinearLayout>

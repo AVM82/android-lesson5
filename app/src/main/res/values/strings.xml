@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Lesson5</string>
+    <string name="show_second_activity">Show second activity</string>
+    <string name="show_dialog">Show dialog</string>
+    <string name="close">Close</string>
+    <string name="exit">Exit</string>
+    <string name="hello_world">HELLO WORLD!</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="activity">Activity count:</string>
+    <string name="dialog">Dialog count:</string>
+    <string name="activity_from_map">Activity count from map:</string>
+    <string name="dialog_from_map">Dialog count from map:</string>
+    <string name="editHaveId">Have id</string>
+    <string name="noId">Have not id</string>
+</resources>
